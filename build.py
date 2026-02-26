@@ -257,8 +257,18 @@ function switchLang(lang) {{
 function toggleArea(header) {{
   var body = header.nextElementSibling;
   var toggle = header.querySelector('.toggle');
-  body.classList.toggle('open');
-  toggle.classList.toggle('open');
+  var isOpen = body.classList.contains('open');
+
+  document.querySelectorAll('.area.visible .area-body.open').forEach(function(b) {{
+    b.classList.remove('open');
+    b.previousElementSibling.querySelector('.toggle').classList.remove('open');
+  }});
+
+  if (!isOpen) {{
+    body.classList.add('open');
+    toggle.classList.add('open');
+    header.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+  }}
 }}
 
 function filterPhase(phase) {{
@@ -277,11 +287,22 @@ function filterPhase(phase) {{
 
 document.addEventListener('DOMContentLoaded', function() {{
   switchLang('es');
-  // Open first visible area
   var first = document.querySelector('.lang-es .area-body');
   var firstToggle = document.querySelector('.lang-es .toggle');
   if (first) first.classList.add('open');
   if (firstToggle) firstToggle.classList.add('open');
+
+  document.querySelectorAll('.nav-link').forEach(function(a) {{
+    a.addEventListener('click', function(e) {{
+      e.preventDefault();
+      var areaId = this.getAttribute('data-area') + '-' + currentLang;
+      var target = document.getElementById(areaId);
+      if (target) {{
+        var header = target.querySelector('.area-header');
+        if (header) toggleArea(header);
+      }}
+    }});
+  }});
 }});
 </script>
 
