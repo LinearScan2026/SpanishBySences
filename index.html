@@ -74,7 +74,8 @@ body {
 .phase-filter {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   padding: 0.6rem 1rem;
   background: #fff;
   border-bottom: 1px solid #ddd;
@@ -88,6 +89,7 @@ body {
   background: #fff;
   cursor: pointer;
   font-family: inherit;
+  white-space: nowrap;
 }
 
 .phase-filter button.active {
