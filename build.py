@@ -198,8 +198,8 @@ def build_full_html(css, areas_html, nav_html, filter_html):
   color: white;
 }}
 
-.lang-es {{ display: none; }}
-.lang-en {{ display: none; }}
+.lang-es, .lang-en {{ display: none; }}
+.lang-es.visible, .lang-en.visible {{ display: block; }}
 
 @media print {{
   .lang-switch {{ display: none !important; }}
@@ -243,13 +243,12 @@ function switchLang(lang) {{
   else buttons[1].classList.add('active');
 
   document.querySelectorAll('.area').forEach(function(el) {{
-    el.style.display = 'none';
+    el.classList.remove('visible');
   }});
   document.querySelectorAll('.lang-' + lang).forEach(function(el) {{
-    el.style.display = '';
+    el.classList.add('visible');
   }});
 
-  // Update nav links to point to current language
   document.querySelectorAll('.nav-link').forEach(function(a) {{
     a.href = '#' + a.getAttribute('data-area') + '-' + lang;
   }});
